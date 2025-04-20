@@ -9,7 +9,7 @@ import { sendOtpViaEmail } from '../../../../helpers/sendOtp';
 import { userModel } from '../model/user.model';
 
 export const signUp2Controller = myControllerHandler(async (req, res) => {
-  const { email, password, name } = req.body;
+  const { email, password, name, phone, role } = req.body;
 
   console.log(req.body);
 
@@ -19,6 +19,9 @@ export const signUp2Controller = myControllerHandler(async (req, res) => {
       code: StatusCodes.BAD_REQUEST,
       message: 'All fields are required: email, password, name',
     });
+  }
+  if (!(role === 'user' || role === 'driver' || role === 'admin')) {
+    throw new Error(`"role can only be "user", "driver" or "admin"`);
   }
 
   // Check if the user already exists
@@ -40,6 +43,8 @@ export const signUp2Controller = myControllerHandler(async (req, res) => {
     passwordHash, // Store hashed password instead of plain text
     name,
     otp,
+    phone,
+    role,
   };
   unverifiedUsers.push(temporaryUserData);
 

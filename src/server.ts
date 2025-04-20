@@ -6,7 +6,11 @@ import config from './config';
 import { errorLogger, logger } from './shared/logger';
 import { socketHelper } from './app/socket/socket';
 import assignTechnicianBasedOnAdminMaxPrice from './app/modules/job/job-cron.service';
-import { PORT } from './data/environmentVariables';
+import {
+  APPLICATION_NAME,
+  CURRENT_MODE,
+  PORT,
+} from './data/environmentVariables';
 
 // Handle uncaught exceptions
 process.on('uncaughtException', error => {
@@ -33,7 +37,7 @@ async function main() {
     server = app.listen(PORT, () => {
       logger.info(
         colors.yellow(
-          `♻️  Application is running at http://170.64.139.81:${PORT}/`
+          `♻️  ${APPLICATION_NAME} is running in ${CURRENT_MODE} mode at http://170.64.139.81:${PORT}/ `
         )
       );
     });

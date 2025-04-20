@@ -1,12 +1,15 @@
 import { StatusCodes } from 'http-status-codes';
 import { myControllerHandler } from '../../../../utils/controller/myControllerHandler.utils';
-import { getUserDataFromRequest } from '../../../../helpers/getUserDataFromRequest.helper';
+import {
+  getUserDataFromRequest,
+  getUserDataFromRequest2,
+} from '../../../../helpers/getUserDataFromRequest.helper';
 import { hashMyPassword } from '../../../../helpers/passwordHashing';
 import { userModel } from '../model/user.model';
 
 export const changePasswordInSettingsController2 = myControllerHandler(
   async (req, res) => {
-    const userData: any = await getUserDataFromRequest(req);
+    const userData: any = await getUserDataFromRequest2(req);
     const { new_password } = req.body;
     const newPasswordHash = await hashMyPassword(new_password);
     userData.passwordHash = newPasswordHash;

@@ -60,6 +60,7 @@ authV2Router.post(
   '/change-password-in-settings',
   changePasswordInSettingsController2
 );
+
 authV2Router.post('/vault/sign-in', vaultSignInController);
 authV2Router.post(
   '/vault/fingerprint-verification',

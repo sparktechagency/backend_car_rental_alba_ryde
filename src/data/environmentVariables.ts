@@ -1,6 +1,8 @@
 import dotenv from 'dotenv';
 dotenv.config();
 
+export const APPLICATION_NAME = process.env.APPLICATION_NAME;
+export const CURRENT_MODE = process.env.CURRENT_MODE;
 export const MONGODB_URL = process.env.MONGODB_URL as string;
 export const JWT_SECRET_KEY = process.env.JWT_SECRET_KEY as string;
 export const JWT_SECRET_KEY_VAULT = process.env.JWT_SECRET_KEY_VAULT as string;
@@ -32,3 +34,7 @@ export const PATH_OF_USER_PROFILE_PICTURE_FOLDER = process.env
 export const ZOOPLA_RAPID_API_BASE_URL = process.env.ZOOPLA_RAPID_API_BASE_URL;
 export const ZOOPLA_RAPID_API_KEY = process.env.ZOOPLA_RAPID_API_KEY;
 export const ZOOPLA_RAPID_API_HOST = process.env.ZOOPLA_RAPID_API_HOST;
+export const MAXIMUM_DISTANCE_BETWEEN_USER_AND_DRIVER_IN_KM = Number(
+  process.env.MAXIMUM_DISTANCE_BETWEEN_USER_AND_DRIVER_IN_KM
+);
+export const GOOGLE_MAP_API_KEY = process.env.GOOGLE_MAP_API_KEY as string;

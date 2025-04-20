@@ -11,14 +11,17 @@ declare module 'socket.io' {
 const socket = (io: Server) => {
   io.on('connection', (socket: Socket) => {
     logger.info(colors.blue('🔌🟢 A user connected'));
-    socket.on('user-connected', (userId: string) => {
-      socket.userId = userId;
-      socket.join(userId); // Join the room for the specific user
-      logger.info(
-        colors.green(`User ${userId} joined their notification room`)
-      );
-    });
+    // socket.on('user-connected', (userId: string) => {
+    //   socket.userId = userId;
+    //   socket.join(userId); // Join the room for the specific user
+    //   logger.info(
+    //     colors.green(`User ${userId} joined their notification room`)
+    //   );
+    // });
 
+    socket.on('test', data => {
+      console.log(data);
+    });
     socket.on('disconnect', () => {
       logger.info(colors.red('🔌🔴 A user disconnected'));
     });

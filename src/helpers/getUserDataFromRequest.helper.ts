@@ -19,6 +19,23 @@ export const getUserDataFromRequest = (req: any) => {
     }
   });
 };
+export const getUserDataFromRequest2 = (req: any) => {
+  return new Promise(async (resolve, reject) => {
+    try {
+      const authData = await getAndParseJwtTokenFromHeader(req, JWT_SECRET_KEY);
+      const { userId } = authData;
+
+      const userData = await userModel.findOne({ id: userId });
+      if (!userData) {
+        throw new Error('USER_DOES_NOT_EXISTS');
+      }
+      resolve(userData);
+    } catch (error) {
+      console.log(error);
+      reject(error);
+    }
+  });
+};
 export const getUserDataFromRequestIfAny = (req: any) => {
   return new Promise(async (resolve, reject) => {
     try {

@@ -28,6 +28,9 @@ import { propertyBlogRouter } from '../app/modules/property_blog/route/blogs.rou
 import { propertyRouter } from '../app/modules/property/route/property.route';
 import { propertyChatRouter } from '../app/modules/property_chat/route/propertyChat.route';
 import { privacyTermsRouter } from '../app/modules/privacy_terms/route/privacyTerm.route';
+import { locationRouter } from '../app/modules/location/route/location.route';
+import { driverRouter } from '../app/modules/driver/route/driver.route';
+import { carRouter } from '../app/modules/car/route/car.route';
 
 const router = express.Router();
 
@@ -97,6 +100,18 @@ const apiRoutes = [
   {
     path: '/privacy-terms',
     route: privacyTermsRouter,
+  },
+  {
+    path: '/location',
+    route: locationRouter,
+  },
+  {
+    path: '/driver',
+    route: driverRouter,
+  },
+  {
+    path: '/car',
+    route: carRouter,
   },
 ];
 

@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 // router
-app.use('/api/v1', router);
+app.use(router);
 
 // live response
 app.get('/', (req: Request, res: Response) => {

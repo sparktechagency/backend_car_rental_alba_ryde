@@ -5,6 +5,7 @@ import { unverifiedUsers } from '../../../../data/temporaryData';
 import { userModelOfMantled } from '../model/userModelOfMantled.model';
 import { NotificationModel } from '../../notifications_v2/model/notification.model';
 import { userModel } from '../model/user.model';
+import { giveAuthenticationToken2 } from '../../../../helpers/jwtAR7';
 
 export const verifyOtp2Controller = myControllerHandler(async (req, res) => {
   const { otp } = req.body;
@@ -28,7 +29,8 @@ export const verifyOtp2Controller = myControllerHandler(async (req, res) => {
     });
   }
 
-  const { name, email, passwordHash } = unverifiedUsers[userDataIndex];
+  const { name, email, passwordHash, phone, role } =
+    unverifiedUsers[userDataIndex];
 
   const existingUser = await userModelOfMantled.findOne({ email });
 
@@ -44,6 +46,8 @@ export const verifyOtp2Controller = myControllerHandler(async (req, res) => {
     name,
     email,
     passwordHash,
+    phone,
+    role,
   });
 
   // Remove the user from unverifiedUsers after successful verification
@@ -56,10 +60,13 @@ export const verifyOtp2Controller = myControllerHandler(async (req, res) => {
     title: 'New User',
   });
 
+  const authToken = await giveAuthenticationToken2(userData.id);
+
   return sendResponse(res, {
     code: StatusCodes.OK,
     message: 'OTP verification complete, account created successfully',
     data: {
+      authToken,
       userData,
     },
   });

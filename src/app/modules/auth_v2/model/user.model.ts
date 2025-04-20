@@ -21,8 +21,7 @@ const userSchema = new mongoose.Schema(
     passwordHash: { type: String, required: false },
     role: {
       type: String,
-      enum: ['user', 'admin'],
-      default: 'user',
+      enum: ['user', 'driver', 'admin'],
       required: true,
     },
     isBanned: {

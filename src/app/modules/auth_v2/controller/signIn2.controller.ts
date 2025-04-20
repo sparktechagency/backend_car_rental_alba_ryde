@@ -3,7 +3,10 @@ import { myControllerHandler } from '../../../../utils/controller/myControllerHa
 import sendResponse, { sendResponse2 } from '../../../../shared/sendResponse';
 import { userModelOfMantled } from '../model/userModelOfMantled.model';
 import { checkMyPassword } from '../../../../helpers/passwordHashing';
-import { giveAuthenticationToken } from '../../../../helpers/jwtAR7';
+import {
+  giveAuthenticationToken,
+  giveAuthenticationToken2,
+} from '../../../../helpers/jwtAR7';
 import { jwtSecretKey } from '../../../../data/environmentVariables';
 import {
   checkIsBanned,
@@ -50,7 +53,7 @@ export const signIn2Controller = myControllerHandler(async (req, res) => {
     });
   }
 
-  const jwtToken = await giveAuthenticationToken(email, jwtSecretKey);
+  const jwtToken = await giveAuthenticationToken2(userData2.id);
   const bearerToken = `Bearer ${jwtToken}`;
   // wipe password hash
   userData2.passwordHash = '';
