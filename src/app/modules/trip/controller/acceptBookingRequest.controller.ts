@@ -14,6 +14,35 @@ export const acceptBookingRequestController = myControllerHandler(
     if (!tripData) {
       throw new Error('trip booking request does not exists with this id');
     }
+    const bookedTripDataOfThisDriver = await TripModel.find({
+      driverId: userData.id,
+      type: 'booked',
+      status: 'accepted',
+    });
+
+    const estimatedNeededTimeInSeconds: any = tripData.estimatedTimeInSeconds;
+    const pickupTime: any = tripData.pickupTime; // Date object
+    const tripEndTime = new Date(
+      pickupTime.getTime() + estimatedNeededTimeInSeconds * 1000
+    );
+
+    for (let i = 0; i < bookedTripDataOfThisDriver.length; i++) {
+      const singleBookedData = bookedTripDataOfThisDriver[i];
+      const estimatedNeededTimeInSeconds2: any =
+        singleBookedData.estimatedTimeInSeconds;
+      const pickupTime2: any = singleBookedData.pickupTime; // Date object
+      const tripEndTime2 = new Date(
+        pickupTime2.getTime() + estimatedNeededTimeInSeconds2 * 1000
+      );
+
+      // Check overlap condition
+      const tripsOverlap =
+        pickupTime <= tripEndTime2 && pickupTime2 <= tripEndTime;
+
+      if (tripsOverlap) {
+        throw new Error('you already have an ongoing trip at that time');
+      }
+    }
 
     tripData.type = 'booked';
     tripData.status = 'accepted';
@@ -22,7 +51,7 @@ export const acceptBookingRequestController = myControllerHandler(
     const updatedTripData = await tripData.save();
 
     const myResponse = {
-      message: 'Review Given Successfully',
+      message: 'Trip Confirmation Successful',
       success: true,
       data: { updatedTripData },
     };

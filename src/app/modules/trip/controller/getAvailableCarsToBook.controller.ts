@@ -1,6 +1,9 @@
 import { StatusCodes } from 'http-status-codes';
 import { myControllerHandler } from '../../../../utils/controller/myControllerHandler.utils';
-import { getEstimatedDistanceAndTime } from '../../../../helpers_v2/location/getEstimatedDistanceAndTime.helper';
+import {
+  getEstimatedDistanceAndTime,
+  getEstimatedDistanceAndTimeWithPolyline,
+} from '../../../../helpers_v2/location/getEstimatedDistanceAndTime.helper';
 import { userModel } from '../../auth_v2/model/user.model';
 import { CarModel } from '../../car/model/car.model';
 import { TripModel } from '../model/trip.model';
@@ -18,12 +21,14 @@ export const getAvailableCarsToBookController = myControllerHandler(
     } = req.body;
     const userData = await getUserDataFromRequest2(req);
 
-    const estimatedTimeAndDuration = await getEstimatedDistanceAndTime(
-      pickup_location_latitude,
-      pickup_location_longitude,
-      dropoff_location_latitude,
-      dropoff_location_longitude
-    );
+    const estimatedTimeAndDuration =
+      await getEstimatedDistanceAndTimeWithPolyline(
+        pickup_location_latitude,
+        pickup_location_longitude,
+        dropoff_location_latitude,
+        dropoff_location_longitude
+      );
+    console.log(estimatedTimeAndDuration);
     if (!estimatedTimeAndDuration) {
       throw new Error('road does not exist between this two location');
     }
@@ -129,6 +134,7 @@ export const getAvailableCarsToBookController = myControllerHandler(
         price: totalPrice,
         carType: singleData.carType,
         pickupTime: convertToDate(pickup_time),
+        routePolyline: estimatedTimeAndDuration.polyline,
       });
       refinedData.push(myData);
     }

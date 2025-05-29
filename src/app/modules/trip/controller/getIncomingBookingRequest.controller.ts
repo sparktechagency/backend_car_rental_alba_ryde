@@ -20,10 +20,47 @@ export const getIncomingBookingRequestController = myControllerHandler(
       carType: carData.carType,
     });
 
+    const tripsThatAreAlreadyBooked = await TripModel.find({
+      type: 'booked',
+      status: { $in: ['accepted', 'ongoing'] },
+    });
+    const refinedData: any = [];
+
+    for (let i = 0; i < incomingRequest.length; i++) {
+      const singleData = incomingRequest[i];
+      const estimatedTimeInSeconds1: any = singleData.estimatedTimeInSeconds;
+      const pickupTime1: any = singleData.pickupTime; // Date object
+
+      const trip1EndTime = new Date(
+        pickupTime1.getTime() + estimatedTimeInSeconds1 * 1000
+      );
+
+      for (let j = 0; j < tripsThatAreAlreadyBooked.length; j++) {
+        const singleAlreadyBookedTrip = tripsThatAreAlreadyBooked[j];
+        const estimatedTimeInSeconds2: any =
+          singleAlreadyBookedTrip.estimatedTimeInSeconds;
+        const pickupTime2: any = singleAlreadyBookedTrip.pickupTime; // Date object
+
+        const trip2EndTime = new Date(
+          pickupTime2.getTime() + estimatedTimeInSeconds2 * 1000
+        );
+
+        const tripsOverlap =
+          pickupTime1 <= trip2EndTime && pickupTime2 <= trip1EndTime;
+
+        if (!tripsOverlap) {
+          refinedData.push(singleData);
+        }
+      }
+    }
+
     const myResponse = {
       message: 'Review Given Successfully',
       success: true,
-      data: incomingRequest,
+      data: {
+        totalNumber: refinedData.length,
+        requests: refinedData,
+      },
     };
     res.status(StatusCodes.OK).json(myResponse);
   }

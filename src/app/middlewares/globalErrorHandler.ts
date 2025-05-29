@@ -154,7 +154,8 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
       error === 'user can not accept his own drive request' ||
       error === 'plz complete your ongoing trip first' ||
       error === 'you already accepted this' ||
-      error === 'you already rejected this trip')
+      error === 'you already rejected this trip' ||
+      error.includes('you already have'))
   ) {
     code = StatusCodes.CONFLICT;
     message = error;
@@ -164,7 +165,8 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
       error.message === 'user can not accept his own drive request' ||
       error.message === 'plz complete your ongoing trip first' ||
       error.message === 'you already accepted this' ||
-      error.message === 'you already rejected this trip')
+      error.message === 'you already rejected this trip' ||
+      error.message.includes('you already have'))
   ) {
     code = StatusCodes.CONFLICT;
     message = error.message;

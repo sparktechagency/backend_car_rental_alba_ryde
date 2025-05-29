@@ -13,6 +13,7 @@ import { requestTripBookingController } from '../controller/requestTripBooking.c
 import { getIncomingBookingRequestController } from '../controller/getIncomingBookingRequest.controller';
 import { populateIncomingBookingRequestController } from '../controller/populateIncomingBookingRequest.controller';
 import { acceptBookingRequestController } from '../controller/acceptBookingRequest.controller';
+import { getBookedTripController } from '../controller/getBookedTrip.controller';
 
 const router = express.Router();
 
@@ -39,5 +40,6 @@ router.post(
   populateIncomingBookingRequestController
 );
 router.post('/accept-booking-request', acceptBookingRequestController);
+router.get('/get-booked-trip', getBookedTripController);
 
 export const tripRouter = router;

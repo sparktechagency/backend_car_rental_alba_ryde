@@ -80,6 +80,10 @@ const tripSchema = new mongoose.Schema(
       enum: ['not_paid', 'paid'],
       default: 'not_paid',
     },
+    routePolyline: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,
