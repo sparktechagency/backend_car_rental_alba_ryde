@@ -44,6 +44,22 @@ const carSchema = new mongoose.Schema(
         'wagon',
       ],
     },
+    proposedPricePerHourByDriver: {
+      type: Number,
+      required: false,
+    },
+    approvedPricePerHour: {
+      type: Number,
+      required: false,
+    },
+    proposedPricePerKilometer: {
+      type: Number,
+      required: false,
+    },
+    approvedPricePerKilometer: {
+      type: Number,
+      required: false,
+    },
   },
   {
     timestamps: true,

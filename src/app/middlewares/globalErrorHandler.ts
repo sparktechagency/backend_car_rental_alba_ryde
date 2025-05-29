@@ -91,10 +91,17 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     errorMessages = [{ path: '', message }];
   }
 
-  if (typeof error === 'string' && error.includes('not exist')) {
+  if (
+    typeof error === 'string' &&
+    (error.includes('not exist') || error.includes('there is no'))
+  ) {
     code = StatusCodes.NOT_FOUND;
     message = error;
-  } else if (error instanceof Error && error.message.includes('not exist')) {
+  } else if (
+    error instanceof Error &&
+    (error.message.includes('not exist') ||
+      error.message.includes('there is no'))
+  ) {
     code = StatusCodes.NOT_FOUND;
     message = error.message;
   } else if (typeof error === 'string' && error.includes('not authorized')) {
@@ -124,7 +131,9 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     (error.includes('please enter') ||
       error.includes('invalid') ||
       error.includes('not valid') ||
-      error.includes('please give'))
+      error.includes('please give') ||
+      error.includes('please turn on') ||
+      error.includes('is not requestable'))
   ) {
     code = StatusCodes.BAD_REQUEST;
     message = error;
@@ -133,15 +142,58 @@ const globalErrorHandler: ErrorRequestHandler = (error, req, res, next) => {
     (error.message.includes('please enter') ||
       error.message.includes('invalid') ||
       error.message.includes('not valid') ||
-      error.message.includes('please give'))
+      error.message.includes('please give') ||
+      error.message.includes('please turn on') ||
+      error.message.includes('is not requestable'))
   ) {
     code = StatusCodes.BAD_REQUEST;
     message = error.message;
-  } else if (typeof error === 'string' && error.includes('is already')) {
+  } else if (
+    typeof error === 'string' &&
+    (error.includes('is already') ||
+      error === 'user can not accept his own drive request' ||
+      error === 'plz complete your ongoing trip first' ||
+      error === 'you already accepted this' ||
+      error === 'you already rejected this trip')
+  ) {
     code = StatusCodes.CONFLICT;
     message = error;
-  } else if (error instanceof Error && error.message.includes('is already')) {
+  } else if (
+    error instanceof Error &&
+    (error.message.includes('is already') ||
+      error.message === 'user can not accept his own drive request' ||
+      error.message === 'plz complete your ongoing trip first' ||
+      error.message === 'you already accepted this' ||
+      error.message === 'you already rejected this trip')
+  ) {
     code = StatusCodes.CONFLICT;
+    message = error.message;
+  } else if (typeof error === 'string' && error.includes('not acceptable')) {
+    code = StatusCodes.NOT_ACCEPTABLE;
+    message = error;
+  } else if (
+    error instanceof Error &&
+    error.message.includes('not acceptable')
+  ) {
+    code = StatusCodes.NOT_ACCEPTABLE;
+    message = error.message;
+  } else if (
+    typeof error === 'string' &&
+    error.includes('this trip is not rejectable')
+  ) {
+    code = StatusCodes.LOCKED;
+    message = error;
+  } else if (
+    error instanceof Error &&
+    error.message.includes('this trip is not rejectable')
+  ) {
+    code = StatusCodes.LOCKED;
+    message = error.message;
+  } else if (typeof error === 'string' && error.includes('not eligible')) {
+    code = StatusCodes.FORBIDDEN;
+    message = error;
+  } else if (error instanceof Error && error.message.includes('not eligible')) {
+    code = StatusCodes.FORBIDDEN;
     message = error.message;
   }
 

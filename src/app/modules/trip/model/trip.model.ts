@@ -15,29 +15,70 @@ const tripSchema = new mongoose.Schema(
     },
     driverId: {
       type: String,
-      required: true,
+      required: false,
     },
     status: {
       type: String,
-      required: true,
-      enum: ['pending', 'approved', 'cancelled'],
-      default: 'pending',
+      required: false,
+      enum: [
+        'not_accepted',
+        'pending',
+        'accepted',
+        'ongoing',
+        'completed',
+        'cancelled',
+      ],
     },
-    pickoffLocationName: {
+    type: {
       type: String,
       required: true,
+      enum: ['user_search', 'user_request', 'current', 'booked'],
     },
-    pickoffLocation: {
+    pickupLocationName: {
+      type: String,
+      required: false,
+    },
+    pickupLocation: {
       type: { type: String, default: 'Point', enum: ['Point'] },
       coordinates: { type: [Number], required: true },
     },
     dropoffLocationName: {
       type: String,
-      required: true,
+      required: false,
     },
     dropoffLocation: {
       type: { type: String, default: 'Point', enum: ['Point'] },
       coordinates: { type: [Number], required: true },
+    },
+    price: {
+      type: Number,
+      required: true,
+    },
+    carType: {
+      type: String,
+      required: true,
+    },
+    pickupTime: {
+      type: Date,
+      required: false,
+    },
+    dropoffTime: {
+      type: Date,
+      required: false,
+    },
+    estimatedTimeInSeconds: {
+      type: Number,
+      required: false,
+    },
+    distanceInKilometers: {
+      type: Number,
+      required: false,
+    },
+    paymentStatus: {
+      type: String,
+      required: true,
+      enum: ['not_paid', 'paid'],
+      default: 'not_paid',
     },
   },
   {
@@ -46,7 +87,7 @@ const tripSchema = new mongoose.Schema(
 );
 
 // Create a 2dsphere index on the pickoff and dropoff location fields for geospatial queries
-tripSchema.index({ pickoffLocation: '2dsphere' });
+tripSchema.index({ pickupLocation: '2dsphere' });
 tripSchema.index({ dropoffLocation: '2dsphere' });
 
 export const TripModel = mongoose.model('Trip', tripSchema);

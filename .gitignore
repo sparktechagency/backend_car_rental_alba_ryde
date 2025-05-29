@@ -4,4 +4,4 @@ dist
 /winston
 .env
 public
-./test
+/test

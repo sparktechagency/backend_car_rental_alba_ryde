@@ -31,6 +31,7 @@ import { privacyTermsRouter } from '../app/modules/privacy_terms/route/privacyTe
 import { locationRouter } from '../app/modules/location/route/location.route';
 import { driverRouter } from '../app/modules/driver/route/driver.route';
 import { carRouter } from '../app/modules/car/route/car.route';
+import { tripRouter } from '../app/modules/trip/route/trip.route';
 
 const router = express.Router();
 
@@ -112,6 +113,10 @@ const apiRoutes = [
   {
     path: '/car',
     route: carRouter,
+  },
+  {
+    path: '/trip',
+    route: tripRouter,
   },
 ];
 
