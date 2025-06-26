@@ -48,6 +48,19 @@ import { getLawyerDataController } from '../../lawyer/controller/getDataOfLawyer
 import { inviteLawyerController } from '../../lawyer/controller/inviteLawyer.controller';
 import { deleteLawyerController } from '../../lawyer/controller/deleteLawyer.controller';
 import { addSuperAdminController } from '../controller/addSuperAdmin.controller';
+import { getTotalUsersDriversCompletedTripsCancelledTripsController } from '../controller/getTotalUsersDriversCompletedTripsCancelledTrips.controller';
+import { createNewAdminController } from '../controller/createNewAdmin.controller';
+import { adminLogInController } from '../controller/adminLogIn.controller';
+import { getTotalUsersTotalIncomeAndUserAndDriverRatioController } from '../controller/getTotalUsersAndIncomeAndUserAndDriverRatio.controller';
+import { getNewestFiveUsersController } from '../controller/getNewestFiveUsers.controller';
+import { getUsersListWithPaginationController } from '../controller/getUsersDataWithPagination.controller';
+import { banUserController3 } from '../controller/banUser3.controller';
+import { unBanUserController3 } from '../../user_v2/controller/unbanUser.controller';
+import { getSingleUserDetailsController } from '../controller/getSingleUserDetails.controller';
+import { getDriversListWithPaginationController } from '../controller/getDriversDataWithPagination.controller';
+import { getRequestsToWithdrawController } from '../controller/getRequestsToWithdraw.controller';
+import { getWithdrawRequestDetailsController } from '../controller/getWithdrawRequestDetails.controller';
+import { uploadInvoiceOfPaymentToDriverController } from '../controller/uploadInvoiceOfPaymentToDriver.controller';
 
 const adminRouterV2 = express.Router();
 
@@ -57,9 +70,9 @@ adminRouterV2.get('/get-dashboard-data', getAdminDashboardDataController);
 adminRouterV2.get('/get-user-data', getUserDataController);
 adminRouterV2.get('/get-collaborator-data', getCollaboratorsDataController);
 adminRouterV2.get('/get-single-user-data', getSingleUserDataController);
-adminRouterV2.post('/ban-user', banUserController);
+adminRouterV2.post('/ban-user-old', banUserController);
 adminRouterV2.post('/ban-user-2/:id', banUserController2);
-adminRouterV2.post('/unban-user', unbanUserController);
+adminRouterV2.post('/unban-user-old', unbanUserController);
 adminRouterV2.post('/unban-user-2/:id', unbanUserController2);
 adminRouterV2.get('/get-reviews-data', getReviewsDataForAdminController);
 adminRouterV2.post('/remove-reviews-data', getReviewsDataForAdminController);
@@ -131,5 +144,37 @@ adminRouterV2.post('/lawyer/add-lawyer', addLawyerController);
 adminRouterV2.get('/lawyer/get-lawyer-data', getLawyerDataController);
 adminRouterV2.post('/lawyer/invite-lawyer', inviteLawyerController);
 adminRouterV2.post('/lawyer/delete-lawyer', deleteLawyerController);
+adminRouterV2.get(
+  '/get-total-users-drivers-income-completed-trips-cancelled-trips',
+  getTotalUsersDriversCompletedTripsCancelledTripsController
+);
+adminRouterV2.get(
+  '/get-income-of-different-month',
+  getIncomeOfDifferentMonthsController
+);
+adminRouterV2.get(
+  '/get-total-users-total-income-total-users-and-drivers-ratio',
+  getTotalUsersTotalIncomeAndUserAndDriverRatioController
+);
+adminRouterV2.get('/create-new-admin', createNewAdminController);
+adminRouterV2.post('/log-in', adminLogInController);
+adminRouterV2.get('/get-newest-five-users', getNewestFiveUsersController);
+adminRouterV2.get(
+  '/get-users-data-with-pagination',
+  getUsersListWithPaginationController
+);
+adminRouterV2.post('/ban-user', banUserController3);
+adminRouterV2.post('/unban-user', unBanUserController3);
+adminRouterV2.get('/get-single-user-details', getSingleUserDetailsController);
+adminRouterV2.get(
+  '/get-drivers-data-with-pagination',
+  getDriversListWithPaginationController
+);
+adminRouterV2.get('/get-requests-to-withdraw', getRequestsToWithdrawController);
+
+adminRouterV2.post(
+  '/upload-invoice-of-payment-to-driver',
+  uploadInvoiceOfPaymentToDriverController
+);
 
 export { adminRouterV2 };

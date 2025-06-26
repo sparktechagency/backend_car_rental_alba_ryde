@@ -24,7 +24,10 @@ export const getBookedTripController = myControllerHandler(async (req, res) => {
   // Find booked trips with pagination and sorting by pickupTime descending (newest first)
   const bookedTripData = await TripModel.find(filter)
     .skip(numbersToSkip)
-    .limit(refinedLimit);
+    .limit(refinedLimit)
+    .sort({
+      createdAt: -1,
+    });
 
   const totalNumberOfPages = Math.ceil(totalRequests / refinedLimit);
 

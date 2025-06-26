@@ -29,6 +29,10 @@ import { verifyOtpOfForgotPasswordController2 } from '../controller/verifyOtpOfF
 import { changePasswordOfForgotPasswordController } from '../controller/changePasswordOfForgotPassword.controller';
 import { updateProfileController2 } from '../controller/updateProfile2.controller';
 import { changePasswordInSettingsController2 } from '../controller/changePasswordInSettings2.controller';
+import { forgotPasswordController3 } from '../controller/forgotPassword3.controller';
+import { changePasswordOfForgotPasswordController2 } from '../controller/changePasswordOfForgotPassword2.controller';
+import { changePasswordOfForgotPasswordController3 } from '../controller/changePasswordInForgotPassword.controller';
+import { checkIfOtpIsCorrectController } from '../controller/checkIfOtpIsCorrecct.controller';
 
 const authV2Router = express.Router();
 
@@ -39,7 +43,7 @@ authV2Router.post('/complete-profile-1', completeProfile1Controller);
 authV2Router.post('/complete-profile-2', completeProfile2Controller);
 authV2Router.post('/update-single-auth-card', updateSingleAuthCardController);
 authV2Router.post('/add-vault-password', addVaultPasswordController);
-authV2Router.post('/forgot-password', forgotPasswordController2);
+authV2Router.post('/forgot-password', forgotPasswordController3);
 authV2Router.post('/forgot-vault-password', forgotVaultPasswordController);
 authV2Router.post(
   '/second-phase-of-forgot-vault-password',
@@ -50,12 +54,14 @@ authV2Router.post(
   '/verify-forgot-password-otp',
   verifyOtpOfForgotPasswordController2
 );
+authV2Router.post('/check-if-otp-is-correct', checkIfOtpIsCorrectController);
 authV2Router.post('/reset-password', changePasswordController);
 authV2Router.post(
   '/change-password-of-forgot-password',
-  changePasswordOfForgotPasswordController
+  changePasswordOfForgotPasswordController3
 );
 authV2Router.post('/change-password', changePasswordInSettingsController);
+
 authV2Router.post(
   '/change-password-in-settings',
   changePasswordInSettingsController2

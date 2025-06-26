@@ -32,6 +32,7 @@ import { locationRouter } from '../app/modules/location/route/location.route';
 import { driverRouter } from '../app/modules/driver/route/driver.route';
 import { carRouter } from '../app/modules/car/route/car.route';
 import { tripRouter } from '../app/modules/trip/route/trip.route';
+import { paymentRouter } from '../app/modules/payment_v2/route/payment.route';
 
 const router = express.Router();
 
@@ -117,6 +118,10 @@ const apiRoutes = [
   {
     path: '/trip',
     route: tripRouter,
+  },
+  {
+    path: '/payment',
+    route: paymentRouter,
   },
 ];
 

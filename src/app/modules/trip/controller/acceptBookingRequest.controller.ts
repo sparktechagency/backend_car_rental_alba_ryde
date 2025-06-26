@@ -9,10 +9,15 @@ export const acceptBookingRequestController = myControllerHandler(
     const { trip_id } = req.body;
     const tripData = await TripModel.findOne({
       id: trip_id,
-      type: 'user_request',
     });
     if (!tripData) {
       throw new Error('trip booking request does not exists with this id');
+    }
+    if (tripData.type === 'booked') {
+      throw new Error('this trip is already booked');
+    }
+    if (tripData.type !== 'user_request') {
+      throw new Error('this trip can not be accepted. request is invalid.');
     }
     const bookedTripDataOfThisDriver = await TripModel.find({
       driverId: userData.id,

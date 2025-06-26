@@ -33,6 +33,26 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: false,
     },
+    stripeCustomerId: {
+      type: String,
+      required: false,
+    },
+    stripePaymentMethodId: {
+      type: String,
+      required: false,
+    },
+    nameOfTheBank: {
+      type: String,
+      required: false,
+    },
+    accountNumberOfTheBank: {
+      type: String,
+      required: false,
+    },
+    branchCodeOfBank: {
+      type: String,
+      required: false,
+    },
   },
   {
     timestamps: true,

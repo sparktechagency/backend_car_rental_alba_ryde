@@ -62,9 +62,9 @@ export const checkIfUserRequestingAdmin3 = (req: any) => {
   return new Promise(async (resolve, reject) => {
     try {
       const authData = await getAndParseJwtTokenFromHeader(req, JWT_SECRET_KEY);
-      const { email } = authData;
+      const { userId } = authData;
       const userData = await userModel.findOne({
-        email,
+        id: userId,
       });
       if (!userData) {
         throw new Error('user does not exists');

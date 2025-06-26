@@ -50,7 +50,15 @@ const tripSchema = new mongoose.Schema(
       type: { type: String, default: 'Point', enum: ['Point'] },
       coordinates: { type: [Number], required: true },
     },
-    price: {
+    totalPrice: {
+      type: Number,
+      required: true,
+    },
+    shareOfDriver: {
+      type: Number,
+      required: true,
+    },
+    shareOfApp: {
       type: Number,
       required: true,
     },
@@ -80,7 +88,41 @@ const tripSchema = new mongoose.Schema(
       enum: ['not_paid', 'paid'],
       default: 'not_paid',
     },
+    paymentIdInOwnDatabase: {
+      type: String,
+      required: false,
+    },
     routePolyline: {
+      type: String,
+      required: false,
+    },
+    isMarkedCompletedByUser: {
+      type: Boolean,
+      required: false,
+    },
+    isMarkedCompleteByDriver: {
+      type: Boolean,
+      required: false,
+    },
+    isPaymentReceivedByDriver: {
+      type: Boolean,
+      required: true,
+      default: false,
+    },
+    cancelledBy: {
+      type: String,
+      enum: ['user', 'driver'],
+      required: false,
+    },
+    pricePaidForCancellation: {
+      type: Number,
+      required: false,
+    },
+    isRequestedByDriverToWithdraw: {
+      type: Boolean,
+      default: false,
+    },
+    imageOfPaymentInvoiceToDriver: {
       type: String,
       required: false,
     },

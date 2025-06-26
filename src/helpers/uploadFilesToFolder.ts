@@ -2,6 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import crypto from 'crypto';
 import sharp from 'sharp';
+import { ar7id } from './ar7Id';
 
 const algorithm = 'aes-256-cbc'; // No longer needed for encryption
 
@@ -18,7 +19,7 @@ export const saveFileToFolder: saveFileToFolderType = async (
   return new Promise(async (resolve, reject) => {
     try {
       const uploadFolder = path.resolve(directoryName);
-      const randomName = crypto.randomBytes(16).toString('hex');
+      const randomName = ar7id();
       const fileExtension = path
         .extname(userImage.originalFilename)
         .toLowerCase();

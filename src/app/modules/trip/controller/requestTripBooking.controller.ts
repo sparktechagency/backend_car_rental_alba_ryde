@@ -12,14 +12,10 @@ export const requestTripBookingController = myControllerHandler(
       id: tripId,
     });
 
-    await TripModel.deleteMany({
-      customerId: userData.id,
-      type: 'user_request',
-    });
-
     if (!tripData) {
       throw new Error('invalid trip id');
     }
+
     if (tripData.customerId !== userData.id) {
       throw new Error('user is not eligible to make this trip');
     }
@@ -27,6 +23,10 @@ export const requestTripBookingController = myControllerHandler(
       throw new Error('this trip is not requestable');
     }
 
+    await TripModel.deleteMany({
+      customerId: userData.id,
+      type: 'user_request',
+    });
     tripData.type = 'user_request';
     await tripData.save();
 

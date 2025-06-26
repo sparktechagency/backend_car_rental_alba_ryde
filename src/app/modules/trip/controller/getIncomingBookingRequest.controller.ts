@@ -8,7 +8,6 @@ export const getIncomingBookingRequestController = myControllerHandler(
   async (req, res) => {
     const userData = await getUserDataFromRequest2(req);
     const carData = await CarModel.findOne({ ownerId: userData.id });
-    console.log(carData?.carType);
     if (!carData) {
       throw new Error(
         'you are not eligible to see this data because you do not have a car.'
@@ -18,6 +17,9 @@ export const getIncomingBookingRequestController = myControllerHandler(
     const incomingRequest = await TripModel.find({
       type: 'user_request',
       carType: carData.carType,
+      status: {
+        $nin: ['cancelled'],
+      },
     });
 
     const tripsThatAreAlreadyBooked = await TripModel.find({
@@ -35,6 +37,9 @@ export const getIncomingBookingRequestController = myControllerHandler(
         pickupTime1.getTime() + estimatedTimeInSeconds1 * 1000
       );
 
+      // Flag to track overlap
+      let hasOverlap = false;
+
       for (let j = 0; j < tripsThatAreAlreadyBooked.length; j++) {
         const singleAlreadyBookedTrip = tripsThatAreAlreadyBooked[j];
         const estimatedTimeInSeconds2: any =
@@ -48,9 +53,15 @@ export const getIncomingBookingRequestController = myControllerHandler(
         const tripsOverlap =
           pickupTime1 <= trip2EndTime && pickupTime2 <= trip1EndTime;
 
-        if (!tripsOverlap) {
-          refinedData.push(singleData);
+        if (tripsOverlap) {
+          hasOverlap = true;
+          break; // No need to check further, one overlap is enough to reject
         }
+      }
+
+      // Push only if no overlaps found with any booked trips
+      if (!hasOverlap) {
+        refinedData.push(singleData);
       }
     }
 
